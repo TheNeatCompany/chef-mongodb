@@ -163,13 +163,15 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
 
   # replicaset
   if !replicaset_name.nil? && node['mongodb']['auto_configure']['replicaset']
-    rs_nodes = search(
-      :node,
-      "mongodb_cluster_name:#{replicaset['mongodb']['cluster_name']} AND \
-       recipes:mongodb\\:\\:replicaset AND \
-       mongodb_shard_name:#{replicaset['mongodb']['shard_name']} AND \
-       chef_environment:#{replicaset.chef_environment}"
-    )
+    rs_query =  if node['mongodb']['auto_configure']['replicaset_search_query_override']
+                  node['mongodb']['auto_configure']['replicaset_search_query_override']
+                else
+                  "mongodb_cluster_name:#{replicaset['mongodb']['cluster_name']} AND \
+                   recipes:mongodb\\:\\:replicaset AND \
+                   mongodb_shard_name:#{replicaset['mongodb']['shard_name']} AND \
+                   chef_environment:#{replicaset.chef_environment}"
+                end
+    rs_nodes = search(:node, rs_query)
 
     ruby_block "config_replicaset" do
       block do
@@ -191,12 +193,14 @@ define :mongodb_instance, :mongodb_type => "mongod" , :action => [:enable, :star
     # add all shards
     # configure the sharded collections
 
-    shard_nodes = search(
-      :node,
-      "mongodb_cluster_name:#{node['mongodb']['cluster_name']} AND \
-       recipes:mongodb\\:\\:shard AND \
-       chef_environment:#{node.chef_environment}"
-    )
+    shard_query = if node['mongodb']['auto_configure']['sharding_search_query_override']
+                    node['mongodb']['auto_configure']['sharding_search_query_override']
+                  else
+                    "mongodb_cluster_name:#{node['mongodb']['cluster_name']} AND \
+                    recipes:mongodb\\:\\:shard AND \
+                    chef_environment:#{node.chef_environment}"
+                  end
+    shard_nodes = search(:node, shard_query)
 
     ruby_block "config_sharding" do
       block do

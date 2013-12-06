@@ -39,7 +39,9 @@ default[:mongodb][:replica_tags] = {}
 default[:mongodb][:replica_votes] = 1
 
 default[:mongodb][:auto_configure][:replicaset] = true
+default[:mongodb][:auto_configure][:replicaset_search_query_override] = nil
 default[:mongodb][:auto_configure][:sharding] = true
+default[:mongodb][:auto_configure][:sharding_search_query_override] = nil
 default[:mongodb][:key_file] = nil
 
 # don't use the node's fqdn, but this url instead; something like 'ec2-x-y-z-z.aws.com' or 'cs1.domain.com' (no port)
