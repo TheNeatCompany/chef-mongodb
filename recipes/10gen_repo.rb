@@ -26,7 +26,7 @@ case node['platform_family']
 when "debian"
   # Adds the repo: http://www.mongodb.org/display/DOCS/Ubuntu+and+Debian+packages
   apt_repository "10gen" do
-    uri "http://downloads-distro.mongodb.org/repo/#{node[:mongodb][:apt_repo]}"
+    uri "http://downloads-distro.mongodb.org/repo/ubuntu-upstart"
     distribution "dist"
     components ["10gen"]
     keyserver "hkp://keyserver.ubuntu.com:80"
