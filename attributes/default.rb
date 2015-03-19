@@ -22,7 +22,7 @@ default[:mongodb][:logpath] = "/var/log/mongodb"
 default[:mongodb][:bind_ip] = nil
 default[:mongodb][:port] = 27017
 default[:mongodb][:configfile] = nil
-
+default[:mongodb][:package_name] = "mongodb-org"
 # cluster identifier
 default[:mongodb][:client_roles] = []
 default[:mongodb][:cluster_name] = nil

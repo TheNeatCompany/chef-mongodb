@@ -18,7 +18,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-node.set[:mongodb][:package_name] = "mongodb-org"
 package node[:mongodb][:package_name] do
   action :install
   version node[:mongodb][:package_version]
